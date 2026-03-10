@@ -73,6 +73,28 @@ npm run lint
 npm run build
 ```
 
+## Vercel production setup
+
+The app code does not read `CONVEX_DEPLOY_KEY` directly.
+
+- Vercel uses `CONVEX_DEPLOY_KEY` during the build
+- Convex deploy sets `NEXT_PUBLIC_CONVEX_URL`
+- the frontend reads `NEXT_PUBLIC_CONVEX_URL` in `components/providers.tsx`
+
+This repo includes [vercel.json](/Users/adamsaleh/Downloads/fobfc/vercel.json) with the correct build command:
+
+```bash
+npx convex deploy --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL --cmd 'npm run build'
+```
+
+In Vercel, add this environment variable for Production:
+
+```bash
+CONVEX_DEPLOY_KEY=your-production-deploy-key
+```
+
+You generate that key in the Convex dashboard from your project's production deployment settings.
+
 ## How the main features work
 
 - Members are stored as first-class Convex records and reused across all other data.
